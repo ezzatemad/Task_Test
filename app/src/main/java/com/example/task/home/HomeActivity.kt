@@ -60,7 +60,7 @@ class HomeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            //Ezzat
+            //E
             val homeViewModel: HomeViewModel = hiltViewModel()
             // Fetch all tasks
             homeViewModel.getAllTasks()
