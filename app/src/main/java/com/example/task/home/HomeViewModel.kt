@@ -27,7 +27,6 @@ class HomeViewModel @Inject constructor(
     val title_error = mutableStateOf("")
     val desc_error = mutableStateOf("")
 
-
     private val _date = MutableStateFlow(
         SimpleDateFormat(
             "MMM dd, yyyy",
@@ -36,17 +35,18 @@ class HomeViewModel @Inject constructor(
     )
     val date: StateFlow<String> get() = _date
 
-
     private val _taskList = MutableStateFlow<List<Task>>(emptyList())
     val taskList: StateFlow<List<Task>> get() = _taskList
 
     private var sortBy = mutableStateOf("")
 
-
     fun onDueDateChange(newDate: String) {
         _date.value = newDate
     }
 
+    fun setCurrentDate() {
+        _date.value = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(Calendar.getInstance().time)
+    }
 
     fun insertTask(): Boolean {
         return if (validateField()) {

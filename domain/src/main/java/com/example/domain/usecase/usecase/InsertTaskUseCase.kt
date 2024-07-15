@@ -11,7 +11,7 @@ class InsertTaskUseCase @Inject constructor(
 
     suspend fun insertTask(title: String, description: String, dueDate: String) {
         try {
-            taskRepository.insertTask(title, description, description)
+            taskRepository.insertTask(title, description, dueDate)
         } catch (ex: Exception) {
             Log.d("TAG", "insertTask: ${ex.localizedMessage}")
         }

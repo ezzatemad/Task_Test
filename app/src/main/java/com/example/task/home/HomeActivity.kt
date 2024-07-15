@@ -21,6 +21,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -38,8 +39,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -78,7 +82,7 @@ class HomeActivity : ComponentActivity() {
 fun HomeComponent(homeViewModel: HomeViewModel) {
     var isGrid by remember { mutableStateOf(true) }
     var selectedButton by remember { mutableStateOf("") }
-
+    var showBottomSheet by remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
@@ -125,7 +129,7 @@ fun HomeComponent(homeViewModel: HomeViewModel) {
                                 onButtonClick = {
                                     selectedButton = "Name"
                                     homeViewModel.toggleSortByName()
-                                }
+                                },
                             )
                             OutlinedButton(
                                 text = "Date",
@@ -133,7 +137,7 @@ fun HomeComponent(homeViewModel: HomeViewModel) {
                                 onButtonClick = {
                                     selectedButton = "Date"
                                     homeViewModel.toggleSortByDate()
-                                }
+                                },
                             )
                         }
 
@@ -145,7 +149,8 @@ fun HomeComponent(homeViewModel: HomeViewModel) {
                                     onButtonClick = {
                                         selectedButton = "Grid"
                                         isGrid = false
-                                    }
+                                    },
+                                    icon = R.drawable.ic_grid
                                 )
                             } else {
                                 OutlinedButton(
@@ -154,7 +159,8 @@ fun HomeComponent(homeViewModel: HomeViewModel) {
                                     onButtonClick = {
                                         selectedButton = "List"
                                         isGrid = true
-                                    }
+                                    },
+                                    icon = R.drawable.ic_list
                                 )
                             }
                         }
@@ -166,6 +172,24 @@ fun HomeComponent(homeViewModel: HomeViewModel) {
                     } else {
                         TaskList(homeViewModel)
                     }
+                }
+
+                FAB(
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                        .padding(16.dp),
+                    onButtonClick = {
+                        homeViewModel.setCurrentDate() // Set current date before showing the bottom sheet
+                        showBottomSheet = true
+                    }
+                )
+
+                if (showBottomSheet) {
+                    AddTaskBottomSheet(
+                        showBottomSheet = showBottomSheet,
+                        onDismissSheet = { showBottomSheet = false },
+                        homeViewModel = homeViewModel
+                    )
                 }
             }
         }
@@ -306,7 +330,8 @@ fun BottomSheetContent(
 fun OutlinedButton(
     text: String,
     isSelected: Boolean,
-    onButtonClick: () -> Unit
+    onButtonClick: () -> Unit,
+    icon: Int? = null
 ) {
     androidx.compose.material3.OutlinedButton(
         onClick = onButtonClick,
@@ -320,8 +345,18 @@ fun OutlinedButton(
     ) {
         Text(
             text = text,
-            style = TextStyle(color = colorResource(id = R.color.white))
-        )
+            fontWeight = FontWeight.Bold,
+            fontSize = 13.sp,
+            style = TextStyle(color = colorResource(id = R.color.white)),
+
+            )
+        if (icon != null) {
+            Icon(
+                painter = painterResource(id = icon),
+                contentDescription = null,
+                modifier = Modifier.padding(start = 8.dp, end = 2.dp)
+            )
+        }
     }
 }
 
@@ -347,7 +382,6 @@ fun FilledButton(text: String, modifier: Modifier, onButtonClick: () -> Unit) {
 
 @Composable
 fun TaskGridList(homeViewModel: HomeViewModel) {
-    var showBottomSheet by remember { mutableStateOf(false) }
     val context = LocalContext.current
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -375,23 +409,6 @@ fun TaskGridList(homeViewModel: HomeViewModel) {
                 }
             }
         )
-
-        FAB(
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .padding(16.dp),
-            onButtonClick = {
-                showBottomSheet = true
-            }
-        )
-
-        if (showBottomSheet) {
-            AddTaskBottomSheet(
-                showBottomSheet = showBottomSheet,
-                onDismissSheet = { showBottomSheet = false },
-                homeViewModel = homeViewModel
-            )
-        }
     }
 }
 
