@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Task</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_details">DetailsActivity</string>
+    <string name="add_new_task">Add New Task</string>
+    <string name="set_date">Set Date</string>
+    <string name="save_task">Save</string>
+</resources>
