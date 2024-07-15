@@ -69,7 +69,7 @@ class HomeViewModel @Inject constructor(
                 _taskList.value = when (sortBy.value) {
                     "Date" -> tasks.sortedBy { it.dueDate }
                     "Name" -> tasks.sortedBy { it.title }
-                    else -> tasks // No sorting
+                    else -> tasks
                 }
             } catch (ex: Exception) {
                 Log.d("TAG", "getAllTasks: ${ex.localizedMessage}")
