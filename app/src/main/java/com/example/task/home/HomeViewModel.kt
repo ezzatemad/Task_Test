@@ -8,6 +8,7 @@ import com.example.data.TaskDB
 import com.example.domain.usecase.model.Task
 import com.example.domain.usecase.usecase.InsertTaskUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -18,7 +19,7 @@ import kotlinx.coroutines.flow.StateFlow
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val insertTaskUseCase: InsertTaskUseCase
+    private val insertTaskUseCase: InsertTaskUseCase,
 ) : ViewModel() {
 
     var title = mutableStateOf("")

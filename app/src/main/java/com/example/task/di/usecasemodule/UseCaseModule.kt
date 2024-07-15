@@ -1,4 +1,4 @@
-package com.example.data.di.usecasemodule
+package com.example.task.di.usecasemodule
 
 import com.example.domain.usecase.repository.TaskRepository
 import com.example.domain.usecase.usecase.InsertTaskUseCase

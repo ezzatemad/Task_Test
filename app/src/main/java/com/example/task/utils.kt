@@ -181,7 +181,7 @@ fun CardTask(
                 )
                 TaskTextDescription(
                     text = description,
-                    maxLines = 6,
+                    maxLines = 5,
                     style = TextStyle(
                         fontSize = 17.sp,
                         color = colorResource(id = R.color.card_details_color)
@@ -226,7 +226,7 @@ fun TaskText(text: String, maxLines: Int, style: TextStyle, modifier: Modifier) 
 fun TaskTextDescription(text: String, maxLines: Int, style: TextStyle, modifier: Modifier) {
     Text(
         text = text,
-        minLines = 6,
+        minLines = 5,
         maxLines = maxLines,
         overflow = TextOverflow.Ellipsis,
         style = style,
